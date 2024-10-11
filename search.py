@@ -1,14 +1,11 @@
-# Python program to convert JSON to Python
 import json
-import os
+from extract import getDir
 
-file_name = 'public.json'
-full_path = os.path.realpath(__file__)
-path, filename = os.path.split(full_path)
-dir = os.path.join(path, file_name)
-print(dir)
+fine_name = 'district.txt'
+dir = getDir(fine_name)
+data = open(dir, encoding='utf8')
 
-json_file = open(dir, encoding="utf8")
-data = json.load(json_file)
 for i in data:
     print(i)
+    pass
+
