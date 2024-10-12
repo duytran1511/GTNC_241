@@ -5,6 +5,7 @@ indent = '  '
 
 class TrieNode:
     count = 0
+    count = 0
     # constructor
     def __init__(self, string = '', letter = ''):
         self.string = string
@@ -12,27 +13,25 @@ class TrieNode:
         self.children = []
         # end of legit word
         self.terminal = False
+        self.fragment = False
         # increase static counter
         TrieNode.count += 1
         
-    # log number of nodes
+    # print number of nodes
     def printCount(self):
         print(TrieNode.count)
-    
-    # log current letter
-    def logLetter(self, line_break = ''):
-        #print(line_break + self.letter)
-        return line_break + self.letter
 
-    # log current string
-    def logString(self, line_break = ''):
-        #print(line_break + self.string)
-        return line_break + self.string
+    # print current letter
+    def printLetter(self):
+        print(self.letter)
 
-    # log string recursively (find children nodes to log)
-    def log(self, line_break = '\n',):
-        log = ''
-        log += self.logString(line_break)
+    # print current string
+    def printString(self):
+        print(self.string)
+
+    # print string recursively (find children nodes to print)
+    def print(self):
+        self.printString()
         for child in self.children:
             log += child.log(line_break + indent)
         return log
@@ -43,20 +42,17 @@ class TrieNode:
         if self.terminal:
             log += self.logString(line_break)
         for child in self.children:
-            log += child.logTerminal(line_break + indent)
-        return log
+            child.printTerminal()
             
-    # log string recursively IF current node is terminal
-    def logFragment(self, line_break = '\n'):
-        log = ''
+    # print string recursively IF current node is terminal
+    def printFragment(self):
         if self.fragment:
-            log += self.logString(line_break)
+            self.printString()
         for child in self.children:
-            log += child.logFragment(line_break + indent)
-        return log
+            child.printFragment()
 
 # basic insert
-def insert_word(root, word, current_str = ''):
+def insert_word(root, word, current_str = '', type = 'terminal'):
     current_node = root
     # iter through input word
     for letter in word:
@@ -72,8 +68,12 @@ def insert_word(root, word, current_str = ''):
         if (not found):
             current_node.children.append(TrieNode(current_str, letter))
             current_node = current_node.children[-1]
-    current_node.terminal = True
+    if type == 'terminal':
+        current_node.terminal = True
+    elif type == 'fragment':
+        current_node.fragment = True
     #print(current_str)
+    return
     return
 
 # basic search (Needs to enhance for auto correct)
@@ -94,6 +94,67 @@ def search_word(root, word):
         if (not found):
             pass
     return current_node.string, current_node.terminal
+
+# insert both the word and the ending fragments for each word into trie 
+def insert_word_frag(root, word):
+    #print('============================')
+    # insert the full word with type terminal
+    insert_word(root, word)
+    # insert the fragments
+    for i in range(1, len(word)):
+        prefix = word[:i]
+        frag = word[i:]
+        #print(prefix)
+        #print(frag)
+        insert_word(root, frag, prefix, type = 'fragment')
+    return
+
+# def search_children_closest(letter, current_node):
+#     found = False
+#     # iter though child node
+#     for child in current_node.children:
+#         #print(child.letter)
+#         #print(child.terminal)
+#         if letter == child.letter:
+#             # switch node
+#             current_node = child
+#             found = True
+#             break
+#     if (not found):
+#         for child in current_node.children:
+#             current_node = search_children_closest(letter, child)
+#         #error_num += 1
+#         pass
+#     return current_node
+
+def search_word_error(root, word):
+    error_lim = 0.2 * len(word)
+    error_num = 0
+    current_node = root
+    # iter through input word
+    for letter in range(len(word)):
+        found = False
+        # iter though child node
+        for child in current_node.children:
+            #print(child.letter)
+            #print(child.terminal)
+            if word[letter] == child.letter:
+                # switch node
+                current_node = child
+                found = True
+                break
+        if (not found):
+            error_num += 1
+            for child in current_node.children:        
+                return search_word_error(child, word[letter:])
+            pass
+    return current_node.string, current_node.terminal, current_node.fragment
+
+def search_address(district, province, ward, address, time_limit):
+    for i in range(len(address)):
+        
+        pass
+    return
 
 district_file = 'district.txt'
 district_data = open(getDir(district_file), encoding='utf8')
@@ -118,13 +179,15 @@ root_province.printCount()
 
 for i in ward_data:
     insert_word(root_ward, i.replace('\n', ''))
-root_ward.printCount()
 
-# logs to check trie structures
-saveToTxt(root_district.log(), 'root_district.txt')
-saveToTxt(root_province.log(), 'root_province.txt')
-saveToTxt(root_ward.log(), 'root_ward.txt')
-
+#print('districts:')
+#root_district.printTerminal()
+#print('provices:')
+#root_province.printTerminal()
+#print('wards:')
+#root_ward.printTerminal()
+#
+root_district.printFragment()
 print(search_word(root_ward, 'Xuân Lâm'))
-print(search_word(root_ward, 'Xn Lâm'))
-#root_district.printCount()
+print(search_word_error(root_ward, 'Xân Lâm'))
+root_district.printCount()
