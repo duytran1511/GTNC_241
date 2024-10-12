@@ -17,21 +17,24 @@ class TrieNode:
         # increase static counter
         TrieNode.count += 1
         
-    # print number of nodes
+    # log number of nodes
     def printCount(self):
         print(TrieNode.count)
+    
+    # log current letter
+    def logLetter(self, line_break = ''):
+        #print(line_break + self.letter)
+        return line_break + self.letter
 
-    # print current letter
-    def printLetter(self):
-        print(self.letter)
+    # log current string
+    def logString(self, line_break = ''):
+        #print(line_break + self.string)
+        return line_break + self.string
 
-    # print current string
-    def printString(self):
-        print(self.string)
-
-    # print string recursively (find children nodes to print)
-    def print(self):
-        self.printString()
+    # log string recursively (find children nodes to log)
+    def log(self, line_break = '\n',):
+        log = ''
+        log += self.logString(line_break)
         for child in self.children:
             log += child.log(line_break + indent)
         return log
@@ -42,14 +45,17 @@ class TrieNode:
         if self.terminal:
             log += self.logString(line_break)
         for child in self.children:
-            child.printTerminal()
+            log += child.logTerminal(line_break + indent)
+        return log
             
-    # print string recursively IF current node is terminal
-    def printFragment(self):
+    # log string recursively IF current node is terminal
+    def logFragment(self, line_break = '\n'):
+        log = ''
         if self.fragment:
-            self.printString()
+            log += self.logString(line_break)
         for child in self.children:
-            child.printFragment()
+            log += child.logFragment(line_break + indent)
+        return log
 
 # basic insert
 def insert_word(root, word, current_str = '', type = 'terminal'):
@@ -181,13 +187,14 @@ for i in ward_data:
     insert_word(root_ward, i.replace('\n', ''))
 
 #print('districts:')
-#root_district.printTerminal()
+#print(root_district.log())
+saveToTxt(root_district.log(), 'root_district.txt')
 #print('provices:')
 #root_province.printTerminal()
 #print('wards:')
 #root_ward.printTerminal()
 #
-root_district.printFragment()
-print(search_word(root_ward, 'Xuân Lâm'))
+#root_district.printFragment()
+#print(search_word(root_ward, 'Xuân Lâm'))
 print(search_word_error(root_ward, 'Xân Lâm'))
-root_district.printCount()
+#root_district.printCount()
