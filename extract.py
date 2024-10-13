@@ -14,7 +14,7 @@ def saveToTxt(data, name):
     with open(dir, 'w', encoding='utf8') as f:
         for line in data:
             #print(line)
-            f.write("%s\n" % line)
+            f.write(line)
     return
     
 def extractData(data):
@@ -23,10 +23,10 @@ def extractData(data):
     ward = set([])
     province = set([])
     for i in data:
-        text.add(i['text'])
-        district.add(i['result']['district'])
-        ward.add(i['result']['ward'])
-        province.add(i['result']['province'])
+        text.add(i['text'] + '\n')
+        district.add(i['result']['district'] + '\n')
+        ward.add(i['result']['ward'] + '\n')
+        province.add(i['result']['province'] + '\n')
     
     saveToTxt(text, 'text.txt')
     saveToTxt(district, 'district.txt')
