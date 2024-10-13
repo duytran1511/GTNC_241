@@ -28,6 +28,11 @@ def extractData(data):
         ward.add(i['result']['ward'] + '\n')
         province.add(i['result']['province'] + '\n')
     
+    text = sorted(text)
+    district = sorted(district)
+    ward = sorted(ward)
+    province = sorted(province)
+    
     saveToTxt(text, 'text.txt')
     saveToTxt(district, 'district.txt')
     saveToTxt(ward, 'ward.txt')
