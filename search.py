@@ -136,6 +136,7 @@ def insert_word_frag(root, word):
 def search_word_error(root, word):
     error_lim = 0.2 * len(word)
     error_num = 0
+    match_num = 0
     current_node = root
     # iter through input word
     for letter in range(len(word)):
@@ -145,6 +146,7 @@ def search_word_error(root, word):
             #print(child.letter)
             #print(child.terminal)
             if word[letter] == child.letter:
+                match_num += 1
                 # switch node
                 current_node = child
                 found = True
@@ -152,9 +154,13 @@ def search_word_error(root, word):
         if (not found):
             error_num += 1
             for child in current_node.children:        
-                return search_word_error(child, word[letter:])
+                result = search_word_error(child, word[letter:])
+                if result != None:
+                    error_num += result[-2]
+                    match_num += result[-1]
+                    return result
             pass
-    return current_node.string, current_node.terminal, current_node.fragment
+    return current_node.string, current_node.terminal, current_node.fragment, error_num, match_num
 
 def search_address(district, province, ward, address, time_limit):
     for i in range(len(address)):
@@ -186,15 +192,10 @@ root_province.printCount()
 for i in ward_data:
     insert_word(root_ward, i.replace('\n', ''))
 
-#print('districts:')
-#print(root_district.log())
 saveToTxt(root_district.log(), 'root_district.txt')
-#print('provices:')
-#root_province.printTerminal()
-#print('wards:')
-#root_ward.printTerminal()
-#
-#root_district.printFragment()
-#print(search_word(root_ward, 'Xuân Lâm'))
-print(search_word_error(root_ward, 'Xân Lâm'))
+saveToTxt(root_province.log(), 'root_province.txt')
+saveToTxt(root_ward.log(), 'root_ward.txt')
+
+print(search_word_error(root_ward, 'Xuân Lâm'))
+print(search_word_error(root_ward, 'Xn Lâm'))
 #root_district.printCount()
