@@ -1,5 +1,6 @@
 import json
 from extract import getDir, saveToTxt
+import time  
 
 indent = '  '
 
@@ -162,11 +163,29 @@ def search_word_error(root, word):
             pass
     return current_node.string, current_node.terminal, current_node.fragment, error_num, match_num
 
-def search_address(district, province, ward, address, time_limit):
-    for i in range(len(address)):
-        
-        pass
-    return
+def search_address(ward, province, district, address, time_limit = 0.099999000):
+    check_time = 0
+    start_time = time.time()
+    result = []
+    start_idx = 0
+    for i in range(0, len(address)):
+        slice = address[:i]
+        result_ward = search_word_error(ward, slice)
+        result_province = search_word_error(province, slice)
+        result_district = search_word_error(district, slice)
+        # this result is garbage since all searches are called from beginning to end (illogical)
+        # we only do this to test the speed of the search algorithm
+        # since the real search_address won't call this many search functions
+        result = [result_ward, result_province, result_district]
+        check_time = time.time()
+        #print(slice)
+        #print(check_time)
+        if time_limit < (check_time - start_time):
+            print('timeout')
+            return address, result
+    final_time = check_time - start_time
+    print(f'runtime: {final_time} s')
+    return address, result
 
 district_file = 'district.txt'
 district_data = open(getDir(district_file), encoding='utf8')
@@ -199,3 +218,11 @@ saveToTxt(root_ward.log(), 'root_ward.txt')
 print(search_word_error(root_ward, 'Xuân Lâm'))
 print(search_word_error(root_ward, 'Xn Lâm'))
 #root_district.printCount()
+
+text_file = 'text.txt'
+text_data = open(getDir(text_file), encoding='utf8')
+results = []
+for i in text_data:
+    results.append(search_address(root_ward, root_province, root_district, i))
+print(results)
+
