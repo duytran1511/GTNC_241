@@ -181,7 +181,8 @@ def search_address(ward, province, district, address, time_limit = 0.099999000):
         #print(slice)
         #print(check_time)
         if time_limit < (check_time - start_time):
-            print('timeout')
+            print('timeout on input:')
+            print(address)
             return address, result
     final_time = check_time - start_time
     print(f'runtime: {final_time} s')
@@ -251,3 +252,12 @@ for i in range(len(results)):
         passed += 1
         pass
 print(passed / len(results))
+
+#==================================================
+# performance test: random string with fixed length
+import string
+import random
+length = 300
+rand_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=length))
+print(rand_str)
+search_address(root_ward, root_province, root_district, rand_str)
