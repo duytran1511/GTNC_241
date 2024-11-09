@@ -11,8 +11,8 @@
     "text": "357/28,Ng-T- Thuật,P1,Q3,TP.HồChíMinh.",
     "result": {
       "province": "Hồ Chí Minh",
-      "district": "",
-      "ward": ""
+      "district": "1",
+      "ward": "3"
     }
   },
   {
@@ -27,7 +27,7 @@
     "text": "Nà Làng Phú Bình, Chiêm Hoá, Tuyên Quang",
     "result": {
       "province": "Tuyên Quang",
-      "district": "Chiêm Hóa",
+      "district": "Chiêm Hoá",
       "ward": "Phú Bình"
     }
   },
@@ -226,9 +226,9 @@
   {
     "text": "Tiểu khu 3, thị trấn Ba Hàng, huyện Phổ Yên, tỉnh Thái Nguyên.",
     "result": {
-      "province": "",
-      "district": "",
-      "ward": ""
+      "province": "Thái Nguyên",
+      "district": "Phổ Yên",
+      "ward": "Ba Hàng"
     }
   },
   {
@@ -346,9 +346,9 @@
   {
     "text": "154/4/81 Nguyễn - Phúc Chu, P15, TB, TP. Hồ Chí Minh",
     "result": {
-      "province": "",
-      "district": "",
-      "ward": ""
+      "province": "Hồ Chí Minh",
+      "district": "Tân Bình",
+      "ward": "15"
     }
   },
   {
@@ -682,9 +682,9 @@
   {
     "text": "Khu phố Nam Tân, TT Thuận Nam, Hàm Thuận Bắc, Bình Thuận.",
     "result": {
-      "province": "",
-      "district": "",
-      "ward": ""
+      "province": "Bình Thuận",
+      "district": "Hàm Thuận Bắc",
+      "ward": "Thuận Nam"
     }
   },
   {
@@ -866,9 +866,9 @@
   {
     "text": "- Khu B Chu Hoà, Việt HhiPhú Thọ",
     "result": {
-      "province": "",
-      "district": "",
-      "ward": ""
+      "province": "Phú Thọ",
+      "district": "Việt Trì",
+      "ward": "Chu Hoà"
     }
   },
   {
@@ -880,7 +880,7 @@
     }
   },
   {
-    "text": "Số 7/Q3, KPI, Phường Long Bình Tân, Tp Biên Hoà, Đồng Nai.",
+    "text": "Số 7/Q3, KPI, Phường Long Bình Tân, Tp Biên Hòa, Đồng Nai.",
     "result": {
       "province": "Đồng Nai",
       "district": "Biên Hòa",
